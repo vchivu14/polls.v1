@@ -5,7 +5,7 @@
 <p>Steps:</p>
 <ol>
   <li>cd polls</li>
-  <li>. venv/bin/activate</li>
+  <li>source venv/bin/activate</li>
   <li>cd mysite</li>
   <li>python3 manage.py runserver</li>
   <li>check localhost:8000/polls</li>
