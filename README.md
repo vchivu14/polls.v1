@@ -6,8 +6,8 @@
 <ol>
   <li>git clone https://github.com/vchivu14/polls2.git</li>
   <li>cd polls2</li>
-  <li>python3 -m venv venv (creates a virtual environment)</li>
-  <li>source venv/bin/activate (activate the environment)</li>
+  <li>python3 -m venv venv</li>
+  <li>source venv/bin/activate</li>
   <li>pip install -r requirements.txt</li>
   <li>cd mysite</li>
   <li>python3 manage.py runserver</li>
