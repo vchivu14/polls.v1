@@ -1,10 +1,12 @@
 # polls
 
-Test app from Django's Website
-The virtual environment is set up all the requirements needed
-Steps:
-1 cd polls
-2 . venv/bin/activate
-3 cd mysite
-4 python3 manage.py runserver
-5 check localhost://8000/polls
+<h2>Test app from Django's Website</h2>
+<h4>The virtual environment is set up all the requirements needed</h4>
+<p>Steps:</p>
+<ol>
+  <li>cd polls</li>
+  <li>. venv/bin/activate</li>
+  <li>cd mysite</li>
+  <li>python3 manage.py runserver</li>
+  <li>check localhost:8000/polls</li>
+</ol>
