@@ -4,7 +4,7 @@
 <h4>The virtual environment is set up with all the requirements needed</h4>
 <p>Steps:</p>
 <ol>
-  <li>cd polls</li>
+  <li>cd polls2</li>
   <li>source venv/bin/activate</li>
   <li>cd mysite</li>
   <li>python3 manage.py runserver</li>
