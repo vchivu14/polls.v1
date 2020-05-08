@@ -1,62 +1,25 @@
 from django.shortcuts import render, get_object_or_404
-# from django.http import HttpResponse, Http404 
 from django.http import HttpResponseRedirect
 from .models import Question, Choice
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-# from django.template import loader
 
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    # template = loader.get_template("polls/index.html")
     context = {
         "latest_question_list": latest_question_list,
     }
-    # return HttpResponse(template.render(context, request))
     return render(request, 'polls/index.html', context)
 
-# class IndexView(generic.ListView):
-#     template_name = 'polls/index.html'
-#     context_object_name = "latest_question_list"
-#     def get_queryset(self):
-#         # return Question.objects.order_by('-pub_date')[:5]
-#         return Question.objects.filter(
-#             pub_date__lte=timezone.now()
-#         ).order_by('-pub_date')[:5]
-
-
-
 def detail(request, question_id):
-    # try:
-    #     question = Question.objects.get(pk=question_id)
-    # except Question.DoesNotExist:
-    #     raise Http404("Question does not exist")
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question':question})
 
-# class DetailView(generic.DetailView):
-#     model = Question
-#     template_name = 'polls/detail.html'
-#     def get_queryset(self):
-#         return Question.objects.filter(pub_date__lte=timezone.now())
-
-
-
 def results(request, question_id):
-    # response = "You're looking at the results of question %s"
-    # return HttpResponse(response % question_id)
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question':question})
-
-# class ResultsView(generic.DetailView):
-#     model = Question
-#     template_name = 'polls/results.html'
-#     def get_queryset(self):
-#         return Question.objects.filter(pub_date__lte=timezone.now())
-
-
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -71,3 +34,32 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def createq(request):
+    try:
+        text = request.POST['question']
+    except KeyError:
+        return render(request, "polls/error.html", {"message": "No question given"})
+    if text == "":
+        return render(request, "polls/error.html", {"message": "No question given"})
+    else:
+        question = Question(question_text=text, pub_date=timezone.now())
+        question.save()
+        return HttpResponseRedirect(reverse("polls:index"))
+     
+def deleteq(request, question_id):
+    question = get_object_or_404(Question, pk=question_id) 
+    question.delete()
+    return HttpResponseRedirect(reverse("polls:index"))
+
+def addOpt(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try: 
+        choice = request.POST['option']
+    except KeyError:
+        return render(request, "polls/error.html", {"message": "No choice provided"})
+    if choice == "":
+        return render(request, "polls/error.html", {"message": "No choice provided"})
+    else:
+        question.choice_set.create(choice_text=choice)
+        return HttpResponseRedirect(reverse("polls:detail", args=(question.id,)))
